@@ -1,0 +1,49 @@
+#! armcc -E
+/*******************************************************************************
+*                                 Apollo
+*                       ----------------------------
+*                       innovating embedded platform
+*
+* Copyright (c) 2001-2012 Guangzhou ZHIYUAN Electronics Stock Co., Ltd.
+* All rights reserved.
+*
+* Contact information:
+* web site:    http://www.embedcontrol.com/
+* e-mail:      apollo.support@zlg.cn
+*******************************************************************************/
+
+#include "lpc5410x_config_memory.h"
+
+#ifdef AM_CORTEX_M4
+
+LR_IROM1 LPC5410X_CFG_MEM_FLASH_CM4_START  LPC5410X_CFG_MEM_FLASH_CM4_LEN  {    ; load region
+    
+	ER_IROM1 LPC5410X_CFG_MEM_FLASH_CM4_START LPC5410X_CFG_MEM_FLASH_CM4_LEN  {  ; load address = execution address
+		*.o (RESET, +First)
+		*(InRoot$$Sections)
+		.ANY (+RO)
+	}
+	SRAM LPC5410X_CFG_MEM_SRAM_CM4_START  LPC5410X_CFG_MEM_SRAM_CM4_LEN  {  ; RW data
+		.ANY (+RW +ZI)
+	}
+}
+
+#endif
+
+#ifdef AM_CORTEX_M0
+
+LR_IROM1 LPC5410X_CFG_MEM_FLASH_CM0_START LPC5410X_CFG_MEM_FLASH_CM0_LEN  {    ; load region
+    
+	ER_IROM1 LPC5410X_CFG_MEM_FLASH_CM0_START LPC5410X_CFG_MEM_FLASH_CM0_LEN  {  ; load address = execution address
+		*.o (RESET, +First)
+		*(InRoot$$Sections)
+		.ANY (+RO)
+	}
+	SRAM LPC5410X_CFG_MEM_SRAM_CM0_START LPC5410X_CFG_MEM_SRAM_CM0_LEN   {  ; RW data
+	    .ANY (+RW +ZI)
+	}
+}
+
+#endif
+
+
